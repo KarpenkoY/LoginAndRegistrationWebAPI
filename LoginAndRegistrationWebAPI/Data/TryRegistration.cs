@@ -21,8 +21,17 @@ namespace LoginAndRegistrationWebAPI.Data
             command.Parameters["@salt"].Value = salt;
 
             await Connection.OpenAsync();
-            int insertResult = await command.ExecuteNonQueryAsync();
-            await Connection.CloseAsync();
+
+            int insertResult = default;
+            try
+            {
+                insertResult = await command.ExecuteNonQueryAsync();
+            }
+            catch { }
+            finally
+            {
+                await Connection.CloseAsync();
+            }
 
             return insertResult == 1;
         }

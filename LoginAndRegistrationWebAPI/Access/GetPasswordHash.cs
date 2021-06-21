@@ -8,17 +8,22 @@ namespace LoginAndRegistrationWebAPI.Access
     {
         private static string GetPasswordHash(string password, byte[] salt)
         {
-            return Convert.ToBase64String
-            (
-                KeyDerivation.Pbkdf2
+            string passwordHash = "";
+
+            try
+            {
+                passwordHash = Convert.ToBase64String(KeyDerivation.Pbkdf2
                 (
                     password: password,
                     salt: salt,
                     prf: KeyDerivationPrf.HMACSHA1,
                     iterationCount: 10000,
                     numBytesRequested: 256 / 8
-                )
-            );
+                ));
+            }
+            catch { }
+
+            return passwordHash;
         }
 
 

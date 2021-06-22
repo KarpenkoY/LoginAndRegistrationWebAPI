@@ -145,14 +145,27 @@ namespace LoginAndRegistrationWebAPI.Tests
 
 
         [Fact]
-        public void Register_UniqueUser_Returns200()
+        public void Login_Admin_Returns200()
+        {
+            UserController controller = new UserController();
+            User user = new User { Login = "Admin", Password = "Admin" };
+
+            ActionResult actualLogin = controller.PostLogin(user);
+
+            Assert.IsType(OkType, actualLogin);
+        }
+
+        [Fact]
+        public void RegisterAndLogin_UniqueUser_Returns200()
         {
             UserController controller = new UserController();
             User user = new User { Login = GetRandomString(8), Password = GetRandomString(12) };
 
             ActionResult actualRegistration = controller.PostRegistration(user);
+            ActionResult actualLogin = controller.PostLogin(user);
 
             Assert.IsType(OkType, actualRegistration);
+            Assert.IsType(OkType, actualLogin);
         }
 
         [Fact]
@@ -199,5 +212,6 @@ namespace LoginAndRegistrationWebAPI.Tests
 
             Assert.IsType(OkType, actualRegistration);
         }
+
     }
 }

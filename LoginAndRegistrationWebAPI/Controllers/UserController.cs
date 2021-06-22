@@ -34,7 +34,7 @@ namespace LoginAndRegistrationWebAPI.Controllers
         [Route("api/login")]
         public ActionResult PostLogin([FromBody] User user)
         {
-            if (!ModelState.IsValid || IsValid(user))   return BadRequest();
+            if (!ModelState.IsValid || !IsValid(user))   return BadRequest();
 
             string token = AccessControl.Login(user);
             if (token == String.Empty)                  return BadRequest();
